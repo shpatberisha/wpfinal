@@ -14,100 +14,147 @@ Text Domain: wp-devs
 Tags: one-column, custom-menu, custom-logo, featured-images, translation-ready
 */
 
-
-.carsallon-slider {
-    background-color: #f5f5f5;
-    padding: 40px 20px;
-    margin-top: 40px;
+/* Fixed typo: carsaallon -> carsallon throughout */
+/* Carsallon page wrappers */
+.carsallon-content {
+  background-color: #f5f8fb;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-.carsallon-slider h2 {
-    text-align: center;
-    margin-bottom: 20px;
+.carsallon-content h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a3a6d;
+  border-left: 5px solid #1a3a6d;
+  padding-left: 12px;
+  margin-bottom: 1rem;
 }
 
+.carsallon-content .intro-text {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.carsallon-blog-items .entry-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #1a3a6d;
+  margin-bottom: 0.5rem;
+}
+
+.carsallon-blog-items .entry-content {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #444;
+}
+
+.carsallon-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+
+/* main content and sidebar widths */
+.carsallon-blog-items {
+  flex: 3;
+  min-width: 0; /* prevents overflow with long children */
+}
+
+.sidebar {
+  flex: 1;
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 30px;
+  box-sizing: border-box;
+}
+
+/* Added wpdevs-pagination class for backward compatibility */
+/* Pagination: if .pages wraps .new/.old then use .pages .new */
+.carsallon-pagination,
+.wpdevs-pagination {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  align-items: center;
+}
+
+.carsallon-pagination .pages .new,
+.carsallon-pagination .pages .old,
+.wpdevs-pagination .pages .new,
+.wpdevs-pagination .pages .old {
+  color: #1a3a6d;
+  font-weight: 600;
+}
+
+/* Slider */
+.carsallon-slider,
+.wpdevs-slider {
+  background: #e9f0ff;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 40px;
+}
+
+.carsallon-slider h2,
+.wpdevs-slider h2 {
+  margin-bottom: 15px;
+  color: #1a3a6d;
+}
+
+/* Simple card slider layout */
 .slider-wrapper {
-    display: flex;
-    overflow-x: auto;
-    gap: 20px;
+  display: flex;
+  gap: 15px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .slider-wrapper .slide {
-    background: #fff;
-    border: 1px solid #ddd;
-    padding: 20px;
-    min-width: 250px;
+  background: #fff;
+  border: 1px solid #bbb;
+  padding: 20px;
+  flex: 1 0 220px; /* allow horizontal scroll on small screens */
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-weight: 600;
+  color: #333;
 }
 
-
-.img_container {
-  position: absolute;
-  top: 0;
-  transition: left 0.5s ease;
+/* Accessibility: focus states for links/buttons */
+a,
+button {
+  outline: none;
 }
 
-.car-news-post {
-    margin-bottom: 40px;
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 20px;
-    display: flex;
+a:focus,
+button:focus {
+  box-shadow: 0 0 0 3px rgba(26, 58, 109, 0.15);
+  border-radius: 4px;
+}
+
+/* Responsive: stack columns on small screens */
+@media (max-width: 880px) {
+  .carsallon-container {
+    flex-direction: column;
     gap: 20px;
-    flex-wrap: wrap;
-}
-
-.car-image img {
-    width: 100%;
-    max-width: 350px;
-    border-radius: 8px;
-}
-
-.car-news-content {
-    flex: 1;
-    min-width: 250px;
-}
-
-.car-title {
-    font-size: 1.5em;
+  }
+  .sidebar {
     margin-top: 0;
+  }
 }
 
-.car-meta-info p {
-    font-size: 0.9em;
-    color: #777;
-}
-
-.car-excerpt {
-    margin-top: 10px;
-}
-
-.car-read-more {
-    display: inline-block;
-    margin-top: 10px;
-    color: #0055cc;
-    text-decoration: underline;
-}
-
-.car-title {
-    font-size: 2em;
-    margin-bottom: 10px;
-}
-
-.car-featured-image img {
-    width: 100%;
-    border-radius: 10px;
-    margin-bottom: 20px;
-}
-
-.car-content {
-    font-size: 1.1em;
-    line-height: 1.6;
-}
-
-.car-specs ul {
-    list-style: none;
-    padding: 0;
-}
-
-.car-specs li {
-    margin-bottom: 8px;
-}
+/* Minor contrast suggestion (developer note - optional)
+   If you need higher contrast for body text consider using #222 instead of #333
+*/

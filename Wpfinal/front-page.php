@@ -5,13 +5,13 @@
     <div id="car-slider-inner">
         <div id="car-slider-images">
             <div class="car-slide">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/car1.jpg" alt="Car 1">
+                <img src="<?php echo get_template_directory_uri(); ?>/audi.jpg" alt="Car 1">
             </div>
             <div class="car-slide">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/car2.jpg" alt="Car 2">
+                <img src="<?php echo get_template_directory_uri(); ?>/bmw.jpg" alt="Car 2">
             </div>
             <div class="car-slide">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/car3.jpg" alt="Car 3">
+                <img src="<?php echo get_template_directory_uri(); ?>/mercedes.jpg" alt="Car 3">
             </div>
         </div>
         <div id="slider-overlay">
@@ -83,9 +83,9 @@
             <section class="carsallon-featured-slider">
                 <h2>Featured Cars</h2>
                 <div class="slider-wrapper">
-                    <div class="car-slide">Car A</div>
-                    <div class="car-slide">Car B</div>
-                    <div class="car-slide">Car C</div>
+                    <div class="car-slide">audi</div>
+                    <div class="car-slide">bmw</div>
+                    <div class="car-slide">mersedes</div>
                 </div>
             </section>
 
