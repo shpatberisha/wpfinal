@@ -1,42 +1,37 @@
-<?php get_header(); ?>
+<?php
+/**
+ * The template for displaying all single posts
+ *
+ * @package Hrc_Sallon
+ */
 
-<div id="primary">
-    <div id="main">
-        <div class="container">
+get_header();
+?>
 
-            <?php 
-            if ( have_posts() ) :
-                while ( have_posts() ) :
-                    the_post();
+<main id="primary" class="site-main">
+    <div class="container">
+        <?php
+        while (have_posts()) :
+            the_post();
 
-                    // Load a custom template part for carsallon single posts, fallback to default single content
-                    if ( get_post_type() === 'carsallon' ) {
-                        get_template_part( 'parts/content', 'carsallon-single' );
-                    } else {
-                        get_template_part( 'parts/content', 'single' );
-                    }
-                    ?>
+            get_template_part('template-parts/content', 'single');
 
-                    <div class="wpdevs-pagination">
-                        <div class="pages next">
-                            <?php next_post_link( '&laquo; %link' ); ?>
-                        </div>
-                        <div class="pages previous">
-                            <?php previous_post_link( '%link &raquo;' ); ?>  
-                        </div>
-                    </div>
+            // Display post navigation
+            the_post_navigation(array(
+                'prev_text' => '<span class="nav-subtitle">' . esc_html__('Previous:', 'wp-devs') . '</span> <span class="nav-title">%title</span>',
+                'next_text' => '<span class="nav-subtitle">' . esc_html__('Next:', 'wp-devs') . '</span> <span class="nav-title">%title</span>',
+            ));
 
-                    <?php
-                    if ( comments_open() || get_comments_number() ) {
-                        comments_template();
-                    }
-
-                endwhile;
+            // If comments are open or we have at least one comment, load up the comment template
+            if (comments_open() || get_comments_number()) :
+                comments_template();
             endif;
-            ?>
 
-        </div>
+        endwhile;
+        ?>
     </div>
-</div>
+</main>
 
-<?php get_footer(); ?>
+<?php
+get_sidebar();
+get_footer();

@@ -1,65 +1,68 @@
-<!DOCTYPE html>
+<?php
+/**
+ * The header for the theme
+ *
+ * @package Hrc_Sallon
+ */
+?>
+<!doctype html>
 <html <?php language_attributes(); ?>>
 <head>
-    <meta charset="<?php bloginfo( 'charset' ); ?>">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="<?php bloginfo('charset'); ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="profile" href="https://gmpg.org/xfn/11">
     <?php wp_head(); ?>
 </head>
+
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
-<div id="page" class="site carsallon-site">
-    <header class="site-header car-header">
-         Top Bar 
-        <section class="top-bar">
-            <div class="container">
-                <div class="logo">
-                    <?php 
-                    if( has_custom_logo() ){
-                        the_custom_logo();
-                    } else {
-                        ?>
-                        <a href="<?php echo home_url( '/' ); ?>" class="site-title">
-                            <span>CarsAllon</span>
-                        </a>
+
+<div id="page" class="site">
+    <a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e('Skip to content', 'wp-devs'); ?></a>
+
+    <header id="masthead" class="site-header">
+        <div class="container">
+            <div class="site-branding">
+                <?php
+                // Display custom logo if set
+                if (has_custom_logo()) :
+                    the_custom_logo();
+                else :
+                    ?>
+                    <div class="site-title-wrapper">
+                        <?php if (is_front_page() && is_home()) : ?>
+                            <h1 class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>" rel="home"><?php bloginfo('name'); ?></a></h1>
+                        <?php else : ?>
+                            <p class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>" rel="home"><?php bloginfo('name'); ?></a></p>
+                        <?php endif; ?>
+                        
                         <?php
-                    }
-                    ?>
-                </div>
+                        $description = get_bloginfo('description', 'display');
+                        if ($description || is_customize_preview()) :
+                            ?>
+                            <p class="site-description"><?php echo $description; ?></p>
+                        <?php endif; ?>
+                    </div>
+                    <?php
+                endif;
+                ?>
 
-                <div class="contact-info">
-                    <p><strong>Call Us:</strong> +1 800 123 4567</p>
-                    <p><strong>Open:</strong> Mon–Sat 9AM–6PM</p>
-                </div>
-
-                <div class="searchbox">
-                    <?php get_search_form(); ?>
-                </div>
+                <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
+                    <?php esc_html_e('Menu', 'wp-devs'); ?>
+                </button>
             </div>
-        </section>
 
-         Navigation Menu 
-        <?php if( ! is_page( 'landing-page' )): ?>
-        <section class="menu-area">
-            <div class="container">
-                <nav class="main-menu car-menu">
-                    <button class="check-button" aria-label="Toggle Menu">
-                        <div class="menu-icon">
-                            <div class="bar1"></div>
-                            <div class="bar2"></div>
-                            <div class="bar3"></div>
-                        </div>
-                    </button>
-                    <?php 
-                    wp_nav_menu( array(
-                        'theme_location' => 'wp_devs_main_menu',
-                        'depth' => 2,
-                        'menu_class' => 'nav-list',
-                        'container' => false,
-                    ));
-                    ?>
-                </nav>
-            </div>
-        </section>
-        <?php endif; ?>
+            <nav id="site-navigation" class="main-navigation">
+                <?php
+                wp_nav_menu(array(
+                    'theme_location' => 'primary',
+                    'menu_id'        => 'primary-menu',
+                    'container'      => false,
+                    'fallback_cb'    => false,
+                ));
+                ?>
+            </nav>
+        </div>
     </header>
+
+    <div id="content" class="site-content">

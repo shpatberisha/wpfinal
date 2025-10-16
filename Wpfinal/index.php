@@ -1,50 +1,55 @@
-<?php get_header(); ?>
+<?php
+/**
+ * The main template file
+ *
+ * @package Hrc_Sallon
+ */
 
-<div id="content" class="site-content carsallon-content">
-    <div id="primary" class="content-area">
-        <main id="main" class="site-main">
+get_header();
+?>
 
-            <h1>Welcome to Carsallon Blog</h1>
-            <p class="intro-text">Latest car news, reviews, and insights from the world of automobiles.</p>
+<main id="primary" class="site-main">
+    <div class="container">
+        <?php
+        if (have_posts()) :
+            
+            if (is_home() && !is_front_page()) :
+                ?>
+                <header>
+                    <h1 class="page-title screen-reader-text"><?php single_post_title(); ?></h1>
+                </header>
+                <?php
+            endif;
 
-            <div class="container carsallon-container">
-                <div class="blog-items carsallon-blog-items">
-                    <?php 
-                        if ( have_posts() ) :
-                            while ( have_posts() ) : the_post();
-                               
-                                get_template_part( 'parts/content', get_post_format() );
-                            endwhile;
-                    ?>
-                        <div class="wpdevs-pagination carsallon-pagination">
-                            <div class="pages new">
-                                <?php previous_posts_link( '<< Newer Posts' ); ?>
-                            </div>
-                            <div class="pages old">
-                                <?php next_posts_link( 'Older Posts >>' ); ?>
-                            </div>
-                        </div>
-                    <?php else : ?>
-                        <p>No car articles found at the moment. Please check back soon!</p>
-                    <?php endif; ?>                                
-                </div>
+            ?>
+            <div class="posts-wrapper">
+                <?php
+                // Start the Loop
+                while (have_posts()) :
+                    the_post();
+                    
+                    // Include the Post-Type-specific template for the content
+                    get_template_part('template-parts/content', get_post_type());
 
-                <?php get_sidebar();  ?>
-
+                endwhile;
+                ?>
             </div>
+            <?php
 
-            <div class="wpdevs-slider carsallon-slider">
-                
-                <h2>Featured Cars</h2>
-                <div class="slider-wrapper">
-                    <div class="slide">Car 1 - Coming Soon</div>
-                    <div class="slide">Car 2 - Coming Soon</div>
-                    <div class="slide">Car 3 - Coming Soon</div>
-                </div>
-            </div>
+            // Display pagination
+            hrc_sallon_pagination();
 
-        </main>
+        else :
+
+            // If no content, include the "No posts found" template
+            get_template_part('template-parts/content', 'none');
+
+        endif;
+        ?>
     </div>
-</div>
+</main>
 
-<?php get_footer(); ?>
+<?php
+get_sidebar();
+get_footer();
+?>

@@ -1,15 +1,15 @@
-<?php 
-if ( is_singular('carsallon') || is_post_type_archive('carsallon') ) {
-    if ( is_active_sidebar( 'sidebar-carsallon' ) ) : ?>
-        <aside class="sidebar">
-            <?php dynamic_sidebar( 'sidebar-carsallon' ); ?>
-        </aside>
-    <?php endif;
-} else {
-    if ( is_active_sidebar( 'sidebar-blog' ) ) : ?>
-        <aside class="sidebar">
-            <?php dynamic_sidebar( 'sidebar-blog' ); ?>
-        </aside>
-    <?php endif;
+<?php
+/**
+ * The sidebar containing the main widget area
+ *
+ * @package Hrc_Sallon
+ */
+
+if (!is_active_sidebar('sidebar-1')) {
+    return;
 }
 ?>
+
+<aside id="secondary" class="widget-area sidebar">
+    <?php dynamic_sidebar('sidebar-1'); ?>
+</aside>
