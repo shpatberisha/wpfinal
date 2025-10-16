@@ -576,3 +576,59 @@ function hrc_sallon_seed_example_cars() {
         }
     }
 }
+
+/**
+ * Handle contact form submission
+ */
+function hrc_sallon_handle_contact_form() {
+    // Verify nonce
+    if (!isset($_POST['contact_nonce']) || !wp_verify_nonce($_POST['contact_nonce'], 'hrc_sallon_contact_form')) {
+        wp_redirect(add_query_arg('contact', 'error', wp_get_referer()));
+        exit;
+    }
+
+    // Sanitize form data
+    $name = sanitize_text_field($_POST['contact_name']);
+    $email = sanitize_email($_POST['contact_email']);
+    $phone = sanitize_text_field($_POST['contact_phone']);
+    $subject = sanitize_text_field($_POST['contact_subject']);
+    $message = sanitize_textarea_field($_POST['contact_message']);
+
+    // Validate required fields
+    if (empty($name) || empty($email) || empty($subject) || empty($message)) {
+        wp_redirect(add_query_arg('contact', 'error', wp_get_referer()));
+        exit;
+    }
+
+    // Prepare email
+    $to = get_option('admin_email');
+    $email_subject = sprintf(__('[%s] New Contact Form Submission: %s', 'wp-devs'), get_bloginfo('name'), $subject);
+    
+    $email_message = sprintf(
+        __("You have received a new message from your website contact form.\n\nName: %s\nEmail: %s\nPhone: %s\nSubject: %s\n\nMessage:\n%s", 'wp-devs'),
+        $name,
+        $email,
+        $phone,
+        $subject,
+        $message
+    );
+
+    $headers = array(
+        'Content-Type: text/plain; charset=UTF-8',
+        'From: ' . get_bloginfo('name') . ' <' . get_option('admin_email') . '>',
+        'Reply-To: ' . $name . ' <' . $email . '>'
+    );
+
+    // Send email
+    $sent = wp_mail($to, $email_subject, $email_message, $headers);
+
+    // Redirect with success or error message
+    if ($sent) {
+        wp_redirect(add_query_arg('contact', 'success', wp_get_referer()));
+    } else {
+        wp_redirect(add_query_arg('contact', 'error', wp_get_referer()));
+    }
+    exit;
+}
+add_action('admin_post_hrc_sallon_contact_form', 'hrc_sallon_handle_contact_form');
+add_action('admin_post_nopriv_hrc_sallon_contact_form', 'hrc_sallon_handle_contact_form');
